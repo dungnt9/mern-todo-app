@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/todos';
 
-export const getTodos = async () => {
-  const response = await axios.get(API_URL);
+export const getTodos = async (userId) => {
+  const response = await axios.get(`${API_URL}?userId=${userId}`);
   return response.data;
 };
 
@@ -17,6 +17,6 @@ export const updateTodo = async (id, todo) => {
   return response.data;
 };
 
-export const deleteTodo = async (id) => {
-  return await axios.delete(`${API_URL}/${id}`);
+export const deleteTodo = async (id, userId) => {
+  return await axios.delete(`${API_URL}/${id}?userId=${userId}`);
 };

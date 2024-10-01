@@ -1,0 +1,18 @@
+.custom-navbar {
+    background: linear-gradient(90deg, #00c853, #b2ff59); /* Xanh lá gradient */
+  }
+  
+  .navbar-title {
+    font-size: 2rem; /* Tăng kích thước chữ */
+    color: white; /* Màu chữ trắng cho dễ đọc */
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-navbar .navbar-brand img {
+    margin-right: 10px;
+  }
+  
