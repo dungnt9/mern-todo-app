@@ -1,3 +1,4 @@
+//C:\Users\dung9\Desktop\mern-todo-app\backend\routes\todoRoutes.js
 const express = require('express');
 const router = express.Router();
 const Todo = require('../models/Todo');
@@ -19,6 +20,7 @@ router.post('/', async (req, res) => {
     title: req.body.title,
     completed: req.body.completed,
     userId: req.body.userId,
+    createdAt: new Date(req.body.createdAt)
   });
 
   try {
@@ -37,6 +39,7 @@ router.put('/:id', async (req, res) => {
     if (todo && todo.userId === req.body.userId) {
       todo.title = req.body.title || todo.title;
       todo.completed = req.body.completed !== undefined ? req.body.completed : todo.completed;
+      todo.createdAt = new Date(req.body.createdAt) || todo.createdAt;
       const updatedTodo = await todo.save();
       res.json(updatedTodo);
     } else {
@@ -47,6 +50,7 @@ router.put('/:id', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 
 // Delete a todo
 router.delete('/:id', async (req, res) => {

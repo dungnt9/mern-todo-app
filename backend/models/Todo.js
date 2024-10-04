@@ -13,6 +13,10 @@ const todoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-}, { timestamps: true });
+  createdAt: {
+    type: Date,
+    required: true
+  }
+}, { timestamps: false }); // Tắt timestamps tự động
 
 module.exports = mongoose.model('Todo', todoSchema);
