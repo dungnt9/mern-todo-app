@@ -157,7 +157,7 @@ function TodoList({ setUserGlobal }) {
         </>
       ) : (
         <div className="login-container">
-          <h1>Welcome to Todo App</h1>
+          <h1 style={{textAlign:'center', color:'green'}}>Welcome to Todo App</h1>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}
             onError={() => console.log('Login Failed')}

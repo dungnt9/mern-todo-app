@@ -28,7 +28,7 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 375px; /* Đặt chiều cao tối đa cho container */
+    max-height: 400px; /* Đặt chiều cao tối đa cho container */
     overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
 }
 
