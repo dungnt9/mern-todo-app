@@ -71,16 +71,13 @@ Before you begin, ensure you have met the following requirements:
 
 6. Open your browser and visit `http://localhost:3000` to use the application.
 
-## Usage
+## Demo Images
 
-1. Log in using your Google account.
-2. Add new todos by entering a title and optional date/time.
-3. Mark todos as completed by checking the checkbox.
-4. Edit todos by clicking the Edit button.
-5. Delete todos by clicking the Delete button.
-6. Log out using the Logout button in the top right corner.
+### Home Page
+![Home Page](./Demo%20images/Home_Page.png)
 
-## Contact
+### Create Task
+![Create Task](./Demo%20images/Create.png)
 
-If you have any questions or feedback, please do not hesitate to contact me at dung9102003hp@gmail.com. [Email me](mailto:dung9102003hp@gmail.com)
-
+### Update Task
+![Update Task](./Demo%20images/Update.png)
