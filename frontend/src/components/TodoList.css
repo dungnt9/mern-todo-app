@@ -1,0 +1,72 @@
+/* TodoList.css */
+
+.todo-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.user-info span {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.btn-logout {
+    background-color: #46d151;
+    border: none;
+    padding: 8px 16px;
+}
+
+.table-container {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-height: 375px; /* Đặt chiều cao tối đa cho container */
+    overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
+}
+
+.todo-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.todo-table th {
+    background-color: #2cd852;
+    padding: 12px;
+    text-align: left;
+    position: sticky; /* Giữ header cố định khi cuộn */
+    top: 0; /* Đặt header ở đầu container */
+}
+
+.todo-table td {
+    padding: 12px;
+    border-top: 1px solid #dee2e6;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-edit {
+    background-color: #ffc107;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}

@@ -1,21 +1,21 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 import logo from '../../assets/logo.png'; 
-import './Header.css'; // Thêm file CSS
+import './Header.css';
 
 const Header = () => {
   return (
     <Navbar expand="lg" className="custom-navbar">
-      <Navbar.Brand href="/">
-        <img
-          src={logo}
-          width="60"
-          height="60"
-          className="d-inline-block align-top"
-          alt="Logo"
-        />{' '}
-        <span className="navbar-title">Todo App</span>
-      </Navbar.Brand>
+      <Container>
+        <Navbar.Brand href="/" className="d-flex align-items-center">
+          <img
+            src={logo}
+            className="d-inline-block align-middle"
+            alt="Logo"
+          />
+          <span className="navbar-title ms-2">Todo App</span>
+        </Navbar.Brand>
+      </Container>
     </Navbar>
   );
 };

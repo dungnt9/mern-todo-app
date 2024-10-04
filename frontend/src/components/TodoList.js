@@ -3,6 +3,7 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { getTodos, updateTodo, deleteTodo, addTodo } from '../services/todoService';
 import TodoForm from './TodoForm';
+import './TodoList.css';
 
 function TodoList({ setUserGlobal }) {
   const [todos, setTodos] = useState([]);
@@ -58,7 +59,11 @@ function TodoList({ setUserGlobal }) {
   const handleAddOrUpdateTodo = async (todoData) => {
     if (editingTodo) {
       try {
-        const updatedTodo = { ...editingTodo, ...todoData };
+        const updatedTodo = { 
+          ...editingTodo, 
+          ...todoData,
+          createdAt: todoData.createdAt // Sử dụng trực tiếp createdAt từ form
+        };
         const result = await updateTodo(editingTodo._id, updatedTodo);
         setTodos(todos.map(todo => todo._id === editingTodo._id ? result : todo));
         setEditingTodo(null);
@@ -67,7 +72,12 @@ function TodoList({ setUserGlobal }) {
       }
     } else {
       try {
-        const newTodo = { ...todoData, completed: false, userId: user.sub };
+        const newTodo = { 
+          ...todoData, 
+          completed: false, 
+          userId: user.sub,
+          createdAt: todoData.createdAt // Sử dụng trực tiếp createdAt từ form
+        };
         const addedTodo = await addTodo(newTodo);
         setTodos([...todos, addedTodo]);
       } catch (error) {
@@ -92,24 +102,24 @@ function TodoList({ setUserGlobal }) {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="todo-container">
       {user ? (
         <>
-          <h1 className="text-center mb-4">Danh sách công việc</h1>
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <div>
+          <div className="todo-header">
+            <h3>Danh sách công việc</h3>
+            <div className="user-info">
               <span>Xin chào, {user.name}</span>
+              <button onClick={handleLogout} className="btn-logout">Đăng xuất</button>
             </div>
-            <button onClick={handleLogout} className="btn btn-secondary">Đăng xuất</button>
           </div>
           <TodoForm
             onSubmit={handleAddOrUpdateTodo}
             initialTodo={editingTodo}
             onCancel={() => setEditingTodo(null)}
           />
-          <div className="table-responsive" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-            <table className="table table-bordered table-striped text-center">
-              <thead className="thead-dark">
+          <div className="table-container">
+            <table className="todo-table">
+              <thead>
                 <tr>
                   <th>Tiêu đề</th>
                   <th>Thời gian tạo</th>
@@ -130,12 +140,14 @@ function TodoList({ setUserGlobal }) {
                       />
                     </td>
                     <td>
-                      <button className="btn btn-warning" onClick={() => setEditingTodo(todo)}>
-                        Sửa
-                      </button>
-                      <button className="btn btn-danger ms-2" onClick={() => handleDelete(todo._id)}>
-                        Xóa
-                      </button>
+                      <div className="todo-actions">
+                        <button className="btn-edit" onClick={() => setEditingTodo(todo)}>
+                          Sửa
+                        </button>
+                        <button className="btn-delete" onClick={() => handleDelete(todo._id)}>
+                          Xóa
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -144,7 +156,7 @@ function TodoList({ setUserGlobal }) {
           </div>
         </>
       ) : (
-        <div className="text-center">
+        <div className="login-container">
           <h1>Welcome to Todo App</h1>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}

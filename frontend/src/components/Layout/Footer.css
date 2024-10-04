@@ -1,20 +1,8 @@
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: #f1f1f1; /* màu nền tùy ý */
-    padding: 10px 0;
-    font-size: 14px;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  footer {
-    margin-top: auto;
-  }
-  
+  text-align: center;
+  background-color: #f1f1f1;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

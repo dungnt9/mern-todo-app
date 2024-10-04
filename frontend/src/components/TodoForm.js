@@ -7,14 +7,23 @@ const TodoForm = ({ onSubmit, initialTodo, onCancel }) => {
   useEffect(() => {
     if (initialTodo) {
       setTitle(initialTodo.title);
-      setSelectedDateTime(new Date(initialTodo.createdAt).toISOString().substring(0, 16));
+      // Định dạng datetime-local input
+      const date = new Date(initialTodo.createdAt);
+      const formattedDate = date.toISOString().slice(0, 16);
+      setSelectedDateTime(formattedDate);
+    } else {
+      setTitle('');
+      setSelectedDateTime('');
     }
   }, [initialTodo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
-      onSubmit({ title, createdAt: selectedDateTime });
+      onSubmit({ 
+        title, 
+        createdAt: selectedDateTime // Gửi trực tiếp giá trị datetime đã chọn
+      });
       setTitle('');
       setSelectedDateTime('');
     }
