@@ -1,4 +1,3 @@
-//C:\Users\dung9\Desktop\mern-todo-app\frontend\src\services\todoService.js
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/todos';

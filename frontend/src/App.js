@@ -1,4 +1,3 @@
-//C:\Users\dung9\Desktop\mern-todo-app\frontend\src\App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';

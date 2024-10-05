@@ -1,7 +1,6 @@
-//C:\Users\dung9\Desktop\mern-todo-app\frontend\src\components\UserInfo.js
 import React from 'react';
 
-function UserInfo({ user, onLogout }) {
+function UserInfo({ user }) {
   if (!user) return null;
 
   return (

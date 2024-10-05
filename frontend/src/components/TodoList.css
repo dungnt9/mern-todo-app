@@ -1,5 +1,3 @@
-/* TodoList.css */
-
 .todo-container {
     max-width: 1320px;
     margin: 0 auto;
@@ -28,7 +26,7 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-height: 400px; /* Đặt chiều cao tối đa cho container */
+    max-height: 400px;
     overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
 }
 
@@ -42,8 +40,8 @@
     background-color: #2cd852;
     padding: 12px;
     text-align: left;
-    position: sticky; /* Giữ header cố định khi cuộn */
-    top: 0; /* Đặt header ở đầu container */
+    position: sticky;
+    top: 0;
 }
 
 .todo-table td {

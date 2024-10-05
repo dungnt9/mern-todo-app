@@ -1,4 +1,3 @@
-//C:\Users\dung9\Desktop\mern-todo-app\backend\routes\todoRoutes.js
 const express = require('express');
 const router = express.Router();
 const Todo = require('../models/Todo');
