@@ -30,18 +30,18 @@ function TodoList({ setUserGlobal }) {
       const fetchedTodos = await getTodos(user.sub);
       setTodos(fetchedTodos);
     } catch (error) {
-      console.error('Error fetching todos:', error);
+      // Handle error silently or show a user-friendly message
     }
   };
 
   const handleToggle = async (id) => {
-    const updatedTodo = todos.find(todo => todo._id === id);
-    updatedTodo.completed = !updatedTodo.completed;
+    const todoToUpdate = todos.find(todo => todo._id === id);
+    const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
     try {
       await updateTodo(id, updatedTodo);
       setTodos(todos.map(todo => todo._id === id ? updatedTodo : todo));
     } catch (error) {
-      console.error('Error updating todo:', error);
+      // Handle error silently or show a user-friendly message
     }
   };
 
@@ -51,44 +51,30 @@ function TodoList({ setUserGlobal }) {
         await deleteTodo(id, user.sub);
         setTodos(todos.filter(todo => todo._id !== id));
       } catch (error) {
-        console.error('Error deleting todo:', error);
+        // Handle error silently or show a user-friendly message
       }
     }
   };
 
   const handleAddOrUpdateTodo = async (todoData) => {
-    if (editingTodo) {
-      try {
-        const updatedTodo = { 
-          ...editingTodo, 
-          ...todoData,
-          createdAt: todoData.createdAt // Sử dụng trực tiếp createdAt từ form
-        };
+    try {
+      if (editingTodo) {
+        const updatedTodo = { ...editingTodo, ...todoData };
         const result = await updateTodo(editingTodo._id, updatedTodo);
         setTodos(todos.map(todo => todo._id === editingTodo._id ? result : todo));
         setEditingTodo(null);
-      } catch (error) {
-        console.error('Error updating todo:', error);
-      }
-    } else {
-      try {
-        const newTodo = { 
-          ...todoData, 
-          completed: false, 
-          userId: user.sub,
-          createdAt: todoData.createdAt // Sử dụng trực tiếp createdAt từ form
-        };
+      } else {
+        const newTodo = { ...todoData, completed: false, userId: user.sub };
         const addedTodo = await addTodo(newTodo);
         setTodos([...todos, addedTodo]);
-      } catch (error) {
-        console.error('Error adding todo:', error);
       }
+    } catch (error) {
+      // Handle error silently or show a user-friendly message
     }
   };
 
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
-    console.log('Decoded token:', decoded);
     setUser(decoded);
     setUserGlobal(decoded);
     localStorage.setItem('user', JSON.stringify(decoded));
@@ -122,7 +108,7 @@ function TodoList({ setUserGlobal }) {
               <thead>
                 <tr>
                   <th>Tiêu đề</th>
-                  <th>Thời gian tạo</th>
+                  <th>Thời gian làm việc</th>
                   <th>Hoàn thành</th>
                   <th>Hành động</th>
                 </tr>
@@ -131,7 +117,7 @@ function TodoList({ setUserGlobal }) {
                 {todos.map(todo => (
                   <tr key={todo._id}>
                     <td>{todo.title}</td>
-                    <td>{new Date(todo.createdAt).toLocaleString()}</td>
+                    <td>{new Date(todo.workTime).toLocaleString()}</td>
                     <td>
                       <input
                         type="checkbox"
@@ -160,7 +146,7 @@ function TodoList({ setUserGlobal }) {
           <h1 style={{textAlign:'center', color:'green'}}>Welcome to Todo App</h1>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}
-            onError={() => console.log('Login Failed')}
+            onError={() => {/* Handle error silently */}}
           />
         </div>
       )}

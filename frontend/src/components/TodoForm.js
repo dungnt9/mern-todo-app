@@ -7,8 +7,7 @@ const TodoForm = ({ onSubmit, initialTodo, onCancel }) => {
   useEffect(() => {
     if (initialTodo) {
       setTitle(initialTodo.title);
-      // Định dạng datetime-local input
-      const date = new Date(initialTodo.createdAt);
+      const date = new Date(initialTodo.workTime);
       const formattedDate = date.toISOString().slice(0, 16);
       setSelectedDateTime(formattedDate);
     } else {
@@ -20,10 +19,7 @@ const TodoForm = ({ onSubmit, initialTodo, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title.trim()) {
-      onSubmit({ 
-        title, 
-        createdAt: selectedDateTime // Gửi trực tiếp giá trị datetime đã chọn
-      });
+      onSubmit({ title, workTime: selectedDateTime });
       setTitle('');
       setSelectedDateTime('');
     }

@@ -68,3 +68,13 @@
     background-color: #dc3545;
     color: white;
 }
+
+.todo-table {
+    table-layout: fixed;
+  }
+  
+  .todo-table td {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
