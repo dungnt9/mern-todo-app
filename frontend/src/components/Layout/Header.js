@@ -5,15 +5,11 @@ import './Header.css';
 
 const Header = () => {
   return (
-    <Navbar expand="lg" className="custom-navbar">
+    <Navbar className="custom-navbar">
       <Container>
-        <Navbar.Brand href="/" className="d-flex align-items-center">
-          <img
-            src={logo}
-            className="d-inline-block align-middle"
-            alt="Logo"
-          />
-          <span className="navbar-title ms-2">Todo App</span>
+        <Navbar.Brand href="/">   {/* click vào logo/ tên ứng dụng, dẫn về href="/" */}
+          <img src={logo} alt="Logo"/>
+          <span className="navbar-title ms-2">Todo App</span> {/* margin-start 2 thêm khoảng cách giữa logo và tên app */}
         </Navbar.Brand>
       </Container>
     </Navbar>

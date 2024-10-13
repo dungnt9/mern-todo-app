@@ -8,17 +8,17 @@ const TodoForm = ({ onSubmit, initialTodo, onCancel }) => {
     if (initialTodo) {
       setTitle(initialTodo.title);
       const date = new Date(initialTodo.workTime);
-      const formattedDate = date.toISOString().slice(0, 16);
+      const formattedDate = date.toISOString().slice(0, 16);//Lấy 16 ký tự đầu từ chuỗi ISO để giữ lại phần YYYY-MM-DDTHH:MM
       setSelectedDateTime(formattedDate);
     } else {
       setTitle('');
       setSelectedDateTime('');
     }
-  }, [initialTodo]);
+  }, [initialTodo]);   //Mảng phụ thuộc-thực thi useEffect khi initialTodo thay đổi
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title.trim()) {
+    if (title.trim()) {     //loại khoảng trắng thừa
       onSubmit({ title, workTime: selectedDateTime });
       setTitle('');
       setSelectedDateTime('');
@@ -32,7 +32,7 @@ const TodoForm = ({ onSubmit, initialTodo, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
         value={title}

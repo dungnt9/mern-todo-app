@@ -10,7 +10,7 @@ function TodoList({ setUserGlobal }) {
   const [editingTodo, setEditingTodo] = useState(null);
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => {       //lấy người dùng từ localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
@@ -19,65 +19,51 @@ function TodoList({ setUserGlobal }) {
     }
   }, [setUserGlobal]);
 
-  useEffect(() => {
+  useEffect(() => {   //nếu user thay đổi, gọi fetchTodos để lấy danh sách công việc.
     if (user) {
       fetchTodos();
     }
   }, [user]);
 
   const fetchTodos = async () => {
-    try {
-      const fetchedTodos = await getTodos(user.sub);
-      setTodos(fetchedTodos);
-    } catch (error) {
-      // Handle error silently or show a user-friendly message
-    }
+    const fetchedTodos = await getTodos(user.sub); //thuộc tính sub của đối tượng user, là định danh duy nhất của người dùng từ Google OAuth
+    setTodos(fetchedTodos);
   };
 
   const handleToggle = async (id) => {
-    const todoToUpdate = todos.find(todo => todo._id === id);
+    const todoToUpdate = todos.find(todo => todo._id === id); //tìm công việc có ID khớp với id mà user nhấn vào
     const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
-    try {
-      await updateTodo(id, updatedTodo);
-      setTodos(todos.map(todo => todo._id === id ? updatedTodo : todo));
-    } catch (error) {
-      // Handle error silently or show a user-friendly message
-    }
+    await updateTodo(id, updatedTodo);
+    setTodos(todos.map(todo => todo._id === id ? updatedTodo : todo)); //phương thức map tạo mảng mới dựa trên mảng todos hiện tại
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa công việc này không?')) {
-      try {
-        await deleteTodo(id, user.sub);
-        setTodos(todos.filter(todo => todo._id !== id));
-      } catch (error) {
-        // Handle error silently or show a user-friendly message
-      }
+      await deleteTodo(id, user.sub);
+      setTodos(todos.filter(todo => todo._id !== id));
     }
   };
 
   const handleAddOrUpdateTodo = async (todoData) => {
-    try {
-      if (editingTodo) {
-        const updatedTodo = { ...editingTodo, ...todoData };
-        const result = await updateTodo(editingTodo._id, updatedTodo);
-        setTodos(todos.map(todo => todo._id === editingTodo._id ? result : todo));
-        setEditingTodo(null);
-      } else {
-        const newTodo = { ...todoData, completed: false, userId: user.sub };
-        const addedTodo = await addTodo(newTodo);
-        setTodos([...todos, addedTodo]);
-      }
-    } catch (error) {
-      // Handle error silently or show a user-friendly message
+    if (editingTodo) {
+      const updatedTodo = { ...editingTodo, ...todoData };  //todoData sẽ ghi đè editingTodo (gốc)
+      const result = await updateTodo(editingTodo._id, updatedTodo);
+      setTodos(todos.map(todo => todo._id === editingTodo._id ? result : todo)); //tạo một mảng mới, cập nhật công việc có _id tìm được
+      setEditingTodo(null);
+    } else {
+      const newTodo = { ...todoData, completed: false, userId: user.sub };
+      const addedTodo = await addTodo(newTodo); //gọi API và gán vào biến addedTodo
+      setTodos([...todos, addedTodo]);  //Spread operator (...todos) để giữ nguyên các công việc cũ trong danh sách, sau đó thêm công việc mới vào mảng.
     }
   };
 
-  const handleGoogleLoginSuccess = (credentialResponse) => {
-    const decoded = jwtDecode(credentialResponse.credential);
-    setUser(decoded);
-    setUserGlobal(decoded);
-    localStorage.setItem('user', JSON.stringify(decoded));
+  //Xử lý sự kiện khi user đăng nhập thành công bằng Google OAuth, tham số: mã định danh user
+  const handleGoogleLoginSuccess = (credentialResponse) => {  
+    // hàm giải mã, credential chứa JWT (JSON Web Token_thông tin người dùng đã được mã hóa) mà Google cung cấp sau khi đăng nhập thành công
+    const decoded = jwtDecode(credentialResponse.credential); 
+    setUser(decoded);        //cập nhật trạng thái user
+    setUserGlobal(decoded);  //cập nhật thông tin người dùng toàn cục
+    localStorage.setItem('user', JSON.stringify(decoded)); //lưu thông tin người dùng vào localStorage (key, value chuỗi JSON)
   };
 
   const handleLogout = () => {
@@ -146,7 +132,6 @@ function TodoList({ setUserGlobal }) {
           <h1 style={{textAlign:'center', color:'green'}}>Welcome to Todo App</h1>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}
-            onError={() => {/* Handle error silently */}}
           />
         </div>
       )}

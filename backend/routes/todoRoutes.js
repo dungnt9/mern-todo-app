@@ -30,13 +30,13 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const todo = await Todo.findOneAndUpdate(
-      { _id: req.params.id, userId: req.body.userId },
+      { _id: req.params.id, userId: req.body.userId },  //_id tự động do MongoDB
       {
         title: req.body.title,
         completed: req.body.completed,
         workTime: new Date(req.body.workTime)
       },
-      { new: true }
+      { new: true }  //trả về todo mới sau khi cập nhật.
     );
     if (todo) {
       res.json(todo);
@@ -50,12 +50,8 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const result = await Todo.deleteOne({ _id: req.params.id, userId: req.query.userId });
-    if (result.deletedCount > 0) {
-      res.json({ message: 'Todo deleted' });
-    } else {
-      res.status(404).json({ message: 'Todo not found or unauthorized' });
-    }
+    await Todo.deleteOne({ _id: req.params.id, userId: req.query.userId });
+    res.json({ message: 'Todo deleted' });
   } catch (err) {
     res.status(500).json({ message: 'Error deleting todo' });
   }
